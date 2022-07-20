@@ -1,4 +1,4 @@
-package main
+package iniparser
 
 import "bufio"
 import "os"
