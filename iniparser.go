@@ -67,7 +67,7 @@ func parse(filename string, size int) {
 
 	data := make(map[string]map[string]string)
 
-	for lineCounter < 9 {
+	for lineCounter < size {
 		line, _ := reader.ReadString('\n')
 		// strings.Split(line , "\t")
 		i := strings.Index(line, "[")
