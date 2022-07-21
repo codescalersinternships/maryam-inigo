@@ -30,23 +30,24 @@ func (p *Parser) getDataFromFile(fileName string) (e error) {
 }
 
 
-func (p *Parser) saveToFile(fileName string, parser map[string]map[string]string) (err error) {
+func (p *Parser) saveToFile(fileName string, data map[string]map[string]string) error {
 
 	f, fe := os.Create(fileName)
 	defer f.Close()
+	
 	if fe != nil {
 		return errors.New("Could not open file")
 	}
-	for k := range parser {
+
+	for k := range data {
 		_, e := f.WriteString(k + "\n")
-		for key, value := range parser[k] {
+		for key, value := range data[k] {
 			f.WriteString(key + "=" + value + "\n")
 		}
 		f.WriteString("\n")
 		if e != nil {
 			return errors.New("Encountered problem while writing to file")
 		}
-
 	}
 	return nil
 }
