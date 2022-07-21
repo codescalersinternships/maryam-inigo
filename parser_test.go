@@ -2,6 +2,7 @@ package parser
 
 import "testing"
 import "reflect"
+import "errors"
 
 func TestParser(t *testing.T) {
 	t.Run("parse function", func(t *testing.T) {
