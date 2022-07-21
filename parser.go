@@ -39,17 +39,30 @@ func (p *Parser) SaveToFile(fileName string, data map[string]map[string]string) 
 		return errors.New("Could not open file")
 	}
 
-	for k := range data {
-		_, e := f.WriteString(k + "\n")
-		for key, value := range data[k] {
-			f.WriteString(key + "=" + value + "\n")
-		}
-		f.WriteString("\n")
-		if e != nil {
-			return errors.New("Encountered problem while writing to file")
-		}
+	text, e := ToString(data)
+	if e != nil {
+		return e
 	}
+	f.WriteString(text)
 	return nil
+}
+
+func (p *Parser) ToString(data map[string]map[string]string) (string, error) { 
+	var output string
+	for k := range data {
+		output := k + "\n"
+		for key, value := range data[k] {
+			output += key 
+			output += "=" 
+			output += value 
+			output += "\n"
+		}
+		output += "\n"
+	}
+	if output = "" {
+		return output, errors.New("failed to convert map to string")
+	}
+	return output, nil
 }
 
 // look for open and close square brackets around section name
