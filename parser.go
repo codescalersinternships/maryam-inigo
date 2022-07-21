@@ -61,6 +61,7 @@ func checkSectionName(line string) bool {
 	
 }
 
+// assign value to specific sectiona and key 
 func (p *Parser) setValues(section, key, value string) error{
 	_, ok := p.ini[section]
 	
@@ -72,6 +73,7 @@ func (p *Parser) setValues(section, key, value string) error{
 	
 }
 
+// retrieve array of strings with all sections 
 func (p *Parser) GetSectionNames() []string {
 
 	keys := make([]string, 0, len(p.ini))
@@ -81,6 +83,7 @@ func (p *Parser) GetSectionNames() []string {
 	return keys
 }
 
+// get value of key in a section
 func (p *Parser) GetValue(section string, key string) (string, error) {
 	_, ok := p.ini[section]
 	if !ok {
@@ -94,6 +97,7 @@ func (p *Parser) GetValue(section string, key string) (string, error) {
 	return p.ini[section][key], nil
 }
 
+// get contents of a section
 func (p *Parser) GetSection(section string) (map[string]string, error) {
 	data, ok := p.ini[section]
 
@@ -115,7 +119,6 @@ func (p *Parser) setSection(section string) error {
 	}
 	return errors.New("Cannot create section")
 }
-
 
 func (p *Parser) parse(content string) error {
 	
