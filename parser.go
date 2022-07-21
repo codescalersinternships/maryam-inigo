@@ -147,7 +147,7 @@ func (p *Parser) parse(content string) error {
 			sectionFound = true 
 
 			if e != nil {
-				return errors.New(e)
+				return e
 			}
 		} else if len(items) == 1 {
 			if items[0] == "" { // empty line
