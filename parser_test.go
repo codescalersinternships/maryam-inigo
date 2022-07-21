@@ -126,7 +126,7 @@ line = `
 		parser := NewParser()
 		_ = parser.LoadFromFile("input.ini")
 		_ = parser.Set("owner", "name", "Maryam Nouh")
-		got := p.ini
+		got := parser.ini
 		want := map[string]map[string]string{
 			"owner":    {"name ": " Maryam Nouh", "organization ": " Acme Widgets Inc."},
 			"database": {"server ": " 192.0.2.62", "port ": " 143", "file ": " \"payroll.dat\""},
@@ -141,7 +141,7 @@ line = `
 		parser := NewParser()
 		_ = parser.LoadFromFile("input.ini")
 		_ = parser.Set("customer", "age", "27")
-		got := p.ini
+		got := parser.ini
 		want := map[string]map[string]string{
 			"customer": {"age ":" 27"},
 			"owner":    {"name ": " John Doe", "organization ": " Acme Widgets Inc."},
