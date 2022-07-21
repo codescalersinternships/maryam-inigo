@@ -57,7 +57,7 @@ func (p *Parser) SaveToFile(fileName string) error {
 		return errors.New("could not open file")
 	}
 
-	text, e := String(p.ini)
+	text, e := p.String(p.ini)
 	if e != nil {
 		return e
 	}

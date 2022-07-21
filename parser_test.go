@@ -70,7 +70,7 @@ line = `
 	})
 	t.Run("check correct section name", func(t *testing.T) {
 		
-		got := checkSectionName("[owner]")
+		got := isValidSectionName("[owner]")
 		want := true
 
 		if !reflect.DeepEqual(got, want) {
@@ -80,7 +80,7 @@ line = `
 	})
 	t.Run("check incorrect section name", func(t *testing.T) {
 		
-		got := checkSectionName("owner]")
+		got := isValidSectionName("owner]")
 		want := false
 
 		if !reflect.DeepEqual(got, want) {
