@@ -75,11 +75,15 @@ func isValidSectionName(line string) bool {
 	
 }
 
-// assign value to specific sectiona and key 
+// assign value to specific section and key 
 func (p *Parser) Set(section, key, value string) error{
 	_, ok := p.ini[section]
 	
 	if !ok { // create new section and key if not found
+		e := p.setSection(section)
+		if e != nil {
+			return e
+		}
 		return errors.New("cannot add value, section or key not found") 
 	}
 	p.ini[section][key] = value

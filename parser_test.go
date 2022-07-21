@@ -121,4 +121,19 @@ line = `
 			t.Errorf("got %#v want\n %#v", got, want)
 		}
 	})
+	t.Run("set value", func(t *testing.T) {
+		
+		parser := NewParser()
+		_ = parser.LoadFromFile("input.ini")
+		_ = parser.Set("owner", "name", "Maryam Nouh")
+		got := 
+		want := map[string]map[string]string{
+			"owner":    {"name ": " Maryam Nouh", "organization ": " Acme Widgets Inc."},
+			"database": {"server ": " 192.0.2.62", "port ": " 143", "file ": " \"payroll.dat\""},
+		}
+
+		if !reflect.DeepEqual(got, want) {
+			t.Errorf("got %#v want\n %#v", got, want)
+		}
+	})
 }
