@@ -41,7 +41,7 @@ func (p *Parser) saveToFile(fileName string, parser map[string]map[string]string
 	for k := range parser {
 		_, e := f.WriteString(k + "\n")
 		for key, value := range parser[k] {
-			f.WriteString(key + " = " + value + "\n")
+			f.WriteString(key + "=" + value + "\n")
 		}
 		f.WriteString("\n")
 		if e != nil {
