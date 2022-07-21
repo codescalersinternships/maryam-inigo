@@ -14,12 +14,12 @@ func NewParser() *Parser {
 	return &Parser{}
 }
 
-func (p *Parser) getDataFromString(data string) (e error) {
+func (p *Parser) GetDataFromString(data string) (e error) {
 	e = p.parse(data)
 	return e
 }
 
-func (p *Parser) getDataFromFile(fileName string) (e error) {
+func (p *Parser) GetDataFromFile(fileName string) (e error) {
 	file, e := os.ReadFile(fileName)
 	if e != nil {
 		return e
@@ -30,7 +30,7 @@ func (p *Parser) getDataFromFile(fileName string) (e error) {
 }
 
 
-func (p *Parser) saveToFile(fileName string, data map[string]map[string]string) error {
+func (p *Parser) SaveToFile(fileName string, data map[string]map[string]string) error {
 
 	f, fe := os.Create(fileName)
 	defer f.Close()
@@ -72,7 +72,7 @@ func (p *Parser) setValues(section, key, value string) error{
 	
 }
 
-func (p *Parser) getSectionNames() []string {
+func (p *Parser) GetSectionNames() []string {
 
 	keys := make([]string, 0, len(p.ini))
 	for k := range p.ini {
@@ -81,7 +81,7 @@ func (p *Parser) getSectionNames() []string {
 	return keys
 }
 
-func (p *Parser) getValue(section string, key string) (string, error) {
+func (p *Parser) GetValue(section string, key string) (string, error) {
 	_, ok := p.ini[section]
 	if !ok {
 		return "", errors.New("Section does not exist")
@@ -94,7 +94,7 @@ func (p *Parser) getValue(section string, key string) (string, error) {
 	return p.ini[section][key], nil
 }
 
-func (p *Parser) getSection(section string) (map[string]string, error) {
+func (p *Parser) GetSection(section string) (map[string]string, error) {
 	data, ok := p.ini[section]
 
 	if !ok {
