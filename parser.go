@@ -30,23 +30,6 @@ func (p *Parser) GetDataFromFile(fileName string) (e error) {
 	return e
 }
 
-func (p *Parser) SaveToFile(fileName string, data map[string]map[string]string) error {
-
-	f, fe := os.Create(fileName)
-	defer f.Close()
-	
-	if fe != nil {
-		return errors.New("Could not open file")
-	}
-
-	text, e := ToString(data)
-	if e != nil {
-		return e
-	}
-	f.WriteString(text)
-	return nil
-}
-
 func (p *Parser) ToString(data map[string]map[string]string) (string, error) { 
 	var output string
 	for k := range data {
@@ -63,6 +46,23 @@ func (p *Parser) ToString(data map[string]map[string]string) (string, error) {
 		return output, errors.New("failed to convert map to string")
 	}
 	return output, nil
+}
+
+func (p *Parser) SaveToFile(fileName string, data map[string]map[string]string) error {
+
+	f, fe := os.Create(fileName)
+	defer f.Close()
+	
+	if fe != nil {
+		return errors.New("Could not open file")
+	}
+
+	text, e := ToString(data)
+	if e != nil {
+		return e
+	}
+	f.WriteString(text)
+	return nil
 }
 
 // look for open and close square brackets around section name
