@@ -99,4 +99,26 @@ line = `
 			t.Errorf("got %#v want\n %#v", got, want)
 		}
 	})
+	t.Run("get values", func(t *testing.T) {
+		
+		parser := NewParser()
+		_ = parser.getDataFromFile("input.ini")
+		got, _ := parser.getValue("owner","name ")
+		want := " John Doe"
+
+		if !reflect.DeepEqual(got, want) {
+			t.Errorf("got %#v want\n %#v", got, want)
+		}
+	})
+	t.Run("get section", func(t *testing.T) {
+		
+		parser := NewParser()
+		_ = parser.getDataFromFile("input.ini")
+		got, _ := parser.getSection("owner")
+		want := map[string]string {"name ": " John Doe", "organization ": " Acme Widgets Inc."}
+
+		if !reflect.DeepEqual(got, want) {
+			t.Errorf("got %#v want\n %#v", got, want)
+		}
+	})
 }

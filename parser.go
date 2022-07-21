@@ -94,13 +94,13 @@ func (p *Parser) getValue(section string, key string) (string, error) {
 	return p.ini[section][key], nil
 }
 
-func (p *Parser) getSection(section string) error {
-	_, ok := p.ini[section]
+func (p *Parser) getSection(section string) (map[string]string, error) {
+	data, ok := p.ini[section]
 
 	if !ok {
-		return errors.New("Section does not exist")
+		return nil , errors.New("Section does not exist")
 	}
-	return nil
+	return data, nil
 }
 
 func (p *Parser) setSection(section string) error {
