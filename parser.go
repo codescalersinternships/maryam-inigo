@@ -167,8 +167,8 @@ func (p *Parser) parse(content string) error {
 			} else { // no equal sign
 				return errors.New("Key value pair incorrect")
 			}
-		} else { // invalid type of line
-			return errors.New("Syntax incorrect")
+		} else { 
+			return errors.New("Failed to parse the line")
 		}
 
 	}
