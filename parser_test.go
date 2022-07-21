@@ -91,8 +91,8 @@ line = `
 	t.Run("get section names", func(t *testing.T) {
 		
 		parser := NewParser()
-		_ = parser.getDataFromFile("input.ini")
-		got := parser.getSectionNames()
+		_ = parser.GetDataFromFile("input.ini")
+		got := parser.GetSectionNames()
 		want := []string{"owner","database"}
 
 		if !reflect.DeepEqual(got, want) {
@@ -102,8 +102,8 @@ line = `
 	t.Run("get values", func(t *testing.T) {
 		
 		parser := NewParser()
-		_ = parser.getDataFromFile("input.ini")
-		got, _ := parser.getValue("owner","name ")
+		_ = parser.GetDataFromFile("input.ini")
+		got, _ := parser.GetValue("owner","name ")
 		want := " John Doe"
 
 		if !reflect.DeepEqual(got, want) {
@@ -113,8 +113,8 @@ line = `
 	t.Run("get section", func(t *testing.T) {
 		
 		parser := NewParser()
-		_ = parser.getDataFromFile("input.ini")
-		got, _ := parser.getSection("owner")
+		_ = parser.GetDataFromFile("input.ini")
+		got, _ := parser.GetSection("owner")
 		want := map[string]string {"name ": " John Doe", "organization ": " Acme Widgets Inc."}
 
 		if !reflect.DeepEqual(got, want) {
