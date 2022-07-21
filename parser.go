@@ -54,7 +54,7 @@ func (p *Parser) SaveToFile(fileName string, data map[string]map[string]string) 
 // look for open and close square brackets around section name
 func checkSectionName(line string) bool {
 	if (len(line) > 0) && (line[0] == '[') && (strings.Count(line, "]") == 1) &&
-		(strings.Count(line, "[") == 1) && (line[len(line)-1] == "]") {
+		(strings.Count(line, "[") == 1) && (line[len(line)-1] == ']') {
 		return true
 	}
 	return false
@@ -142,9 +142,13 @@ func (p *Parser) parse(content string) error {
 			continue
 		} else if checkSectionName(items[0]) == true { // look for section 
 			x := string(items[0])
-			_ = p.setSection(x[1:len(x)-1])
+			e := p.setSection(x[1:len(x)-1])
 			section = x[1:len(x)-1] // remove square brackets
 			sectionFound = true 
+
+			if e != nil {
+				return errors.New(e)
+			}
 		} else if len(items) == 1 {
 			if items[0] == "" { // empty line
 				continue
