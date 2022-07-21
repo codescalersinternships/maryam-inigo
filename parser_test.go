@@ -141,7 +141,7 @@ line = `
 		parser := NewParser()
 		_ = parser.LoadFromFile("input.ini")
 		_ = parser.Set("customer", "age", "27")
-		got := 
+		got := p.ini
 		want := map[string]map[string]string{
 			"customer": {"age ":" 27"},
 			"owner":    {"name ": " John Doe", "organization ": " Acme Widgets Inc."},
