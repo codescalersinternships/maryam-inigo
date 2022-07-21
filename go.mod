@@ -1,3 +1,3 @@
-module github.com/nouhm/GoProject1
+module Documents/Programming/Go/my-project/parser
 
 go 1.18
