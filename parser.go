@@ -29,7 +29,7 @@ func (p *Parser) GetDataFromFile(fileName string) (e error) {
 	return e
 }
 
-func (p *Parser) SaveToFile(fileName string, data map[string]map[string]string) error {
+func (p *Parser) saveToFile(fileName string, data map[string]map[string]string) error {
 
 	f, fe := os.Create(fileName)
 	defer f.Close()
