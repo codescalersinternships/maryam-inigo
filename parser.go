@@ -15,12 +15,12 @@ func NewParser() *Parser {
 	return &Parser{}
 }
 
-func (p *Parser) GetDataFromString(data string) (e error) {
+func (p *Parser) LoadFromString(data string) (e error) {
 	e = p.parse(data)
 	return e
 }
 
-func (p *Parser) GetDataFromFile(fileName string) (e error) {
+func (p *Parser) LoadFromFile(fileName string) (e error) {
 	f, e := os.ReadFile(fileName)
 	if e != nil {
 		return e
@@ -30,10 +30,10 @@ func (p *Parser) GetDataFromFile(fileName string) (e error) {
 	return e
 }
 
-func (p *Parser) ToString(data map[string]map[string]string) (string, error) { 
+func (p *Parser) String(data map[string]map[string]string) (string, error) { 
 	var output string
 	for k := range data {
-		output := k + "\n"
+		output := "[" + k + "]\n"
 		for key, value := range data[k] {
 			output += key 
 			output += "=" 
@@ -48,16 +48,16 @@ func (p *Parser) ToString(data map[string]map[string]string) (string, error) {
 	return output, nil
 }
 
-func (p *Parser) SaveToFile(fileName string, data map[string]map[string]string) error {
+func (p *Parser) SaveToFile(fileName string) error {
 
 	f, fe := os.Create(fileName)
 	defer f.Close()
 	
 	if fe != nil {
-		return errors.New("Could not open file")
+		return errors.New("could not open file")
 	}
 
-	text, e := ToString(data)
+	text, e := String(p.ini)
 	if e != nil {
 		return e
 	}
@@ -65,8 +65,8 @@ func (p *Parser) SaveToFile(fileName string, data map[string]map[string]string) 
 	return nil
 }
 
-// look for open and close square brackets around section name
-func checkSectionName(line string) bool {
+// look for open and close square brackets around section name 
+func isValidSectionName(line string) bool {
 	if (len(line) > 0) && (line[0] == '[') && (strings.Count(line, "]") == 1) &&
 		(strings.Count(line, "[") == 1) && (line[len(line)-1] == ']') {
 		return true
@@ -76,11 +76,11 @@ func checkSectionName(line string) bool {
 }
 
 // assign value to specific sectiona and key 
-func (p *Parser) setValues(section, key, value string) error{
+func (p *Parser) Set(section, key, value string) error{
 	_, ok := p.ini[section]
 	
-	if !ok {
-		return errors.New("Cannot add value, section or key not found")
+	if !ok { // create new section and key if not found
+		return errors.New("cannot add value, section or key not found") 
 	}
 	p.ini[section][key] = value
 	return nil
@@ -97,15 +97,15 @@ func (p *Parser) GetSectionNames() []string {
 	return keys
 }
 
-// get value of key in a section
-func (p *Parser) GetValue(section string, key string) (string, error) {
+// get value of key in a section 
+func (p *Parser) Get(section string, key string) (string, error) {
 	_, ok := p.ini[section]
 	if !ok {
-		return "", errors.New("Section does not exist")
+		return "", errors.New("section does not exist") 
 	}
 	_, ok = p.ini[section][key]
 	if !ok {
-		return "", errors.New("Key does not exist")
+		return "", errors.New("key does not exist")
 	}
 
 	return p.ini[section][key], nil
@@ -116,7 +116,7 @@ func (p *Parser) GetSection(section string) (map[string]string, error) {
 	data, ok := p.ini[section]
 
 	if !ok {
-		return nil , errors.New("Section does not exist")
+		return nil , errors.New("section does not exist")
 	}
 	return data, nil
 }
@@ -131,7 +131,7 @@ func (p *Parser) setSection(section string) error {
 		
 		return nil
 	}
-	return errors.New("Cannot create section")
+	return errors.New("cannot create section")
 }
 
 func (p *Parser) parse(content string) error {
@@ -140,9 +140,9 @@ func (p *Parser) parse(content string) error {
 
 	p.ini = make(map[string]map[string]string)
 
-	var key string
-	var value string
-	var section string
+	key := "" 
+	value := "" 
+	section := "" 
 	
 	sectionFound := false
 
@@ -154,7 +154,7 @@ func (p *Parser) parse(content string) error {
 		// check if line is a comment
 		if items[0] == ";" {
 			continue
-		} else if checkSectionName(items[0]) == true { // look for section 
+		} else if isValidSectionName(items[0]) == true { // look for section 
 			x := string(items[0])
 			e := p.setSection(x[1:len(x)-1])
 			section = x[1:len(x)-1] // remove square brackets
@@ -167,25 +167,24 @@ func (p *Parser) parse(content string) error {
 			if items[0] == "" { // empty line
 				continue
 			} else { // invalid type of line
-				return errors.New("Syntax incorrect")
+				return errors.New("syntax incorrect")
 			}
 		} else if sectionFound == true { // key and values can be retrieved now
 			keyValuePair := strings.Split(line, "=")
-
+			// !! add test if "==" in key value
 			if len(keyValuePair) == 2 {
 
 				key = keyValuePair[0]
 				value = keyValuePair[1]
-				p.setValues(section, key, value)
+				p.Set(section, key, value)
 			} else { // no equal sign
-				return errors.New("Key value pair incorrect")
+				return errors.New("key value pair incorrect")
 			}
 		} else { 
-			return errors.New("Failed to parse the line")
+			return errors.New("failed to parse the line")
 		}
 
 	}
-	p.SaveToFile("output.txt", p.ini)
 	return nil
 }
 
