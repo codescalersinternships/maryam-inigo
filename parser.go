@@ -59,7 +59,7 @@ func (p *Parser) ToString(data map[string]map[string]string) (string, error) {
 		}
 		output += "\n"
 	}
-	if output = "" {
+	if output == "" {
 		return output, errors.New("failed to convert map to string")
 	}
 	return output, nil
