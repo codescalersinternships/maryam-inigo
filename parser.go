@@ -173,8 +173,10 @@ func (p *Parser) parse(content string) error {
 				return errors.New("syntax incorrect")
 			}
 		} else if sectionFound == true { // key and values can be retrieved now
+			if (strings.Count(line, "=") > 1) || (strings.Count(line, "=") < 1) {
+				return errors.New("number of equal signs not equal to 1")
+			}
 			keyValuePair := strings.Split(line, "=")
-			// !! add test if "==" in key value
 			if len(keyValuePair) == 2 {
 
 				key = keyValuePair[0]
