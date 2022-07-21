@@ -127,7 +127,7 @@ func (p *Parser) parse(content string) error {
 	var value string
 	var section string
 	
-	sectionFlag := false
+	sectionFound := false
 
 	for scanner.Scan() {
 		line := scanner.Text()
@@ -140,14 +140,14 @@ func (p *Parser) parse(content string) error {
 			x := string(items[0])
 			_ = p.setSection(x[1:len(x)-1])
 			section = x[1:len(x)-1]
-			sectionFlag = true
+			sectionFound = true
 		} else if len(items) == 1 {
 			if items[0] == "" {
 				continue
 			} else {
 				return errors.New("Syntax incorrect")
 			}
-		} else if sectionFlag == true {
+		} else if sectionFound == true {
 			keyValuePair := strings.Split(line, "=")
 
 			if len(keyValuePair) == 2 {
