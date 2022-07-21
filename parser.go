@@ -1,4 +1,4 @@
-package main
+package parser
 
 import "bufio"
 import "os"
@@ -176,8 +176,3 @@ func (p *Parser) parse(content string) error {
 }
 
 
-func main() {
-	parser := Parser{}
-	parser.GetDataFromFile("input.ini")
-	parser.SaveToFile("output.txt" , parser.ini)
-}
