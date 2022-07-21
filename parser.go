@@ -2,7 +2,6 @@ package main
 
 import "bufio"
 import "os"
-import "fmt"
 import "strings"
 import "errors"
 
