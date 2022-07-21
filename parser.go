@@ -172,6 +172,5 @@ func (p *Parser) parse(content string) error {
 func main() {
 	parser := Parser{}
 	parser.getDataFromFile("input.ini")
-	
-	fmt.Println(parser.ini)
+	parser.saveToFile("output.txt" , parser.ini)
 }
