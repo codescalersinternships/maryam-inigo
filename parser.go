@@ -29,7 +29,7 @@ func (p *Parser) GetDataFromFile(fileName string) (e error) {
 	return e
 }
 
-func (p *Parser) saveToFile(fileName string, data map[string]map[string]string) error {
+func (p *Parser) SaveToFile(fileName string, data map[string]map[string]string) error {
 
 	f, fe := os.Create(fileName)
 	defer f.Close()
@@ -171,13 +171,13 @@ func (p *Parser) parse(content string) error {
 		}
 
 	}
-	p.saveToFile("output.txt", p.ini)
+	p.SaveToFile("output.txt", p.ini)
 	return nil
 }
 
 
 func main() {
 	parser := Parser{}
-	parser.getDataFromFile("input.ini")
-	parser.saveToFile("output.txt" , parser.ini)
+	parser.GetDataFromFile("input.ini")
+	parser.SaveToFile("output.txt" , parser.ini)
 }

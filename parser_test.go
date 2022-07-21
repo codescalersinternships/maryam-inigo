@@ -41,7 +41,7 @@ file = "payroll.dat"
 line = `
 
 		parser := NewParser()
-		_ = parser.getDataFromString(iniText)
+		_ = parser.GetDataFromString(iniText)
 		got := parser.ini
 		want := map[string]map[string]string{
 			"owner":    {"name ": " John Doe", "organization ": " Acme Widgets Inc."},
@@ -56,7 +56,7 @@ line = `
 	t.Run("get from file", func(t *testing.T) {
 		
 		parser := NewParser()
-		_ = parser.getDataFromFile("input.ini")
+		_ = parser.GetDataFromFile("input.ini")
 		got := parser.ini
 		want := map[string]map[string]string{
 			"owner":    {"name ": " John Doe", "organization ": " Acme Widgets Inc."},
