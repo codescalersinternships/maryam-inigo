@@ -21,11 +21,11 @@ func (p *Parser) GetDataFromString(data string) (e error) {
 }
 
 func (p *Parser) GetDataFromFile(fileName string) (e error) {
-	file, e := os.ReadFile(fileName)
+	f, e := os.ReadFile(fileName)
 	if e != nil {
 		return e
 	}
-	data := string(file)
+	data := string(f)
 	e = p.parse(data)
 	return e
 }
