@@ -79,7 +79,7 @@ func isValidSectionName(line string) bool {
 func (p *Parser) Set(section, key, value string) error{
 	_, ok := p.ini[section]
 	
-	if !ok { // create new section and key if not found
+	if !ok { 
 		e := p.setSection(section)
 		if e != nil {
 			return e

@@ -28,6 +28,23 @@ line = `
 		}
 
 	})
+	t.Run("parse function", func(t *testing.T) {
+		iniText := `; last modified 1 April 2001 by John Doe
+[owner]
+name == John Doe
+organization = Acme Widgets Inc.`
+		parser := NewParser()
+		_ = parser.parse(iniText)
+		got := parser.ini
+		want := map[string]map[string]string{
+			"owner":    {"name ": " John Doe", "organization ": " Acme Widgets Inc."},
+		}
+
+		if !reflect.DeepEqual(got, want) {
+			t.Errorf("got %#v want\n %#v", got, want)
+		}
+
+	})
 	t.Run("get from string", func(t *testing.T) {
 		iniText := `; last modified 1 April 2001 by John Doe
 [owner]
