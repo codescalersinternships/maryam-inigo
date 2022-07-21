@@ -5,11 +5,12 @@ import "os"
 import "strings"
 import "errors"
 
-
+// struct to hold the map of map for section, key and value
 type Parser struct {
 	ini map[string]map[string]string
 }
 
+// returns pointer to the struct
 func NewParser() *Parser {
 	return &Parser{}
 }
