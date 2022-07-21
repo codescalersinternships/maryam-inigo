@@ -137,20 +137,21 @@ func (p *Parser) parse(content string) error {
 
 		items := strings.Split(line, " ")
 
+		// check if line is a comment
 		if items[0] == ";" {
 			continue
-		} else if checkSectionName(items[0]) == true {
+		} else if checkSectionName(items[0]) == true { // look for section 
 			x := string(items[0])
 			_ = p.setSection(x[1:len(x)-1])
-			section = x[1:len(x)-1]
-			sectionFound = true
+			section = x[1:len(x)-1] // remove square brackets
+			sectionFound = true 
 		} else if len(items) == 1 {
-			if items[0] == "" {
+			if items[0] == "" { // empty line
 				continue
-			} else {
+			} else { // invalid type of line
 				return errors.New("Syntax incorrect")
 			}
-		} else if sectionFound == true {
+		} else if sectionFound == true { // key and values can be retrieved now
 			keyValuePair := strings.Split(line, "=")
 
 			if len(keyValuePair) == 2 {
@@ -158,11 +159,10 @@ func (p *Parser) parse(content string) error {
 				key = keyValuePair[0]
 				value = keyValuePair[1]
 				p.setValues(section, key, value)
-			} else {
+			} else { // no equal sign
 				return errors.New("Key value pair incorrect")
 			}
-
-		} else {
+		} else { // invalid type of line
 			return errors.New("Syntax incorrect")
 		}
 
