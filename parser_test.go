@@ -125,10 +125,10 @@ line = `
 		
 		parser := NewParser()
 		_ = parser.LoadFromFile("input.ini")
-		_ = parser.Set("owner", "name", "Maryam Nouh")
+		_ = parser.Set("owner", "name ", "Maryam Nouh")
 		got := parser.ini
 		want := map[string]map[string]string{
-			"owner":    {"name ": " Maryam Nouh", "organization ": " Acme Widgets Inc."},
+			"owner":    {"name ": "Maryam Nouh", "organization ": " Acme Widgets Inc."},
 			"database": {"server ": " 192.0.2.62", "port ": " 143", "file ": " \"payroll.dat\""},
 		}
 

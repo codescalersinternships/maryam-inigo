@@ -84,7 +84,6 @@ func (p *Parser) Set(section, key, value string) error{
 		if e != nil {
 			return e
 		}
-		return errors.New("cannot add value, section or key not found") 
 	}
 	p.ini[section][key] = value
 	return nil
